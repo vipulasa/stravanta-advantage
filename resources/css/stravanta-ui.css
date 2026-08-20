@@ -1,0 +1,469 @@
+/**
+ * STRAVANTA Advisory — interface additions.
+ *
+ * Everything here is NEW work that the sign-off template did not cover: the
+ * mobile navigation, the contact form, and the contact modal. It is kept
+ * separate from `stravanta.css` so that file stays provably identical to the
+ * approved artwork and can be re-verified against it at any time.
+ *
+ * The design language is inherited deliberately: no border radius anywhere,
+ * 1px `--line` borders, uppercase letter-spaced micro-labels, and the
+ * navy / cobalt / gold palette declared on `:root` in `stravanta.css`.
+ */
+
+/* ---------------------------------------------------------------- header --- */
+
+/* The header stays in view while the page scrolls. It sits above page content
+   but below the menu (60) and modal (70) layers. */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+/* The template hides the nav and CTA below 900px with nothing in their place.
+   These rules give that space a hamburger and a full-screen menu instead. */
+
+.nav-toggle {
+    align-items: center;
+    background: none;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    display: none;
+    height: 46px;
+    justify-content: center;
+    justify-self: end;
+    padding: 0;
+    width: 46px;
+}
+.nav-toggle:hover {
+    border-color: var(--cobalt);
+}
+.nav-toggle span {
+    background: var(--navy);
+    display: block;
+    height: 2px;
+    position: relative;
+    width: 18px;
+}
+.nav-toggle span:before,
+.nav-toggle span:after {
+    background: var(--navy);
+    content: '';
+    height: 2px;
+    left: 0;
+    position: absolute;
+    width: 18px;
+}
+.nav-toggle span:before {
+    top: -6px;
+}
+.nav-toggle span:after {
+    top: 6px;
+}
+
+/* --------------------------------------------------- full-screen menu --- */
+
+.menu-overlay {
+    background: rgba(4, 18, 51, 0.6);
+    inset: 0;
+    position: fixed;
+    z-index: 60;
+}
+.menu-panel {
+    background: linear-gradient(135deg, #061842, #09245f 58%, #0b2f75);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    inset: 0;
+    overflow-y: auto;
+    position: fixed;
+    z-index: 61;
+}
+.menu-head {
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    flex: 0 0 auto;
+    height: 88px;
+    justify-content: space-between;
+    padding: 0 clamp(24px, 5vw, 76px);
+}
+.menu-head .brand span {
+    border-left-color: rgba(255, 255, 255, 0.24);
+    color: #aebdda;
+}
+/* The wordmark artwork is navy, which vanishes against the navy overlay. */
+.menu-head .brand img {
+    filter: brightness(0) invert(1);
+}
+.menu-close {
+    align-items: center;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    font-size: 18px;
+    height: 46px;
+    justify-content: center;
+    padding: 0;
+    width: 46px;
+}
+.menu-close:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+.menu-body {
+    align-items: center;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    padding: 48px clamp(24px, 5vw, 76px);
+}
+.menu-body a {
+    color: #fff;
+    font-size: clamp(30px, 8vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.5;
+}
+.menu-body a:hover {
+    color: #4f83ff;
+}
+.menu-body .button {
+    margin-top: 34px;
+    width: 100%;
+}
+.menu-foot {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    color: #9fb0ce;
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    padding: 24px clamp(24px, 5vw, 76px);
+    text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------- modal --- */
+
+.modal-overlay {
+    background: rgba(4, 18, 51, 0.72);
+    inset: 0;
+    position: fixed;
+    z-index: 70;
+}
+.modal-panel {
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: 0 24px 60px rgba(19, 48, 101, 0.24);
+    left: 50%;
+    max-height: calc(100vh - 48px);
+    max-width: 720px;
+    overflow-y: auto;
+    padding: 40px;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100vw - 48px);
+    z-index: 71;
+}
+.modal-head {
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+.modal-title {
+    color: var(--navy);
+    font-size: 30px;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    margin: 8px 0 0;
+}
+.modal-description {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 12px 0 0;
+}
+.modal-close {
+    align-items: center;
+    align-self: flex-start;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--navy);
+    cursor: pointer;
+    display: flex;
+    flex: 0 0 auto;
+    font-size: 16px;
+    height: 38px;
+    justify-content: center;
+    padding: 0;
+    width: 38px;
+}
+.modal-close:hover {
+    border-color: var(--cobalt);
+    color: var(--cobalt);
+}
+
+/* --------------------------------------------------------------- form --- */
+
+.contact-form {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+}
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+.field-wide {
+    grid-column: 1 / -1;
+}
+.field label {
+    color: #7c8da6;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+.field label .optional {
+    color: var(--line);
+    letter-spacing: 0.08em;
+    margin-left: 6px;
+    text-transform: none;
+}
+.field input,
+.field select,
+.field textarea {
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 15px;
+    min-height: 52px;
+    padding: 14px 16px;
+    transition: border-color 0.2s ease;
+    width: 100%;
+}
+.field textarea {
+    line-height: 1.7;
+    min-height: 150px;
+    resize: vertical;
+}
+.field select {
+    appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+        linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+    background-position:
+        calc(100% - 21px) 24px,
+        calc(100% - 16px) 24px;
+    background-repeat: no-repeat;
+    background-size:
+        5px 5px,
+        5px 5px;
+    padding-right: 44px;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: var(--cobalt);
+    outline: 2px solid rgba(21, 89, 245, 0.18);
+    outline-offset: 0;
+}
+.field-invalid input,
+.field-invalid select,
+.field-invalid textarea {
+    border-color: #b3261e;
+}
+.field-error {
+    color: #b3261e;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* The honeypot trap. Deliberately NOT `display: none` — some bots skip fields
+   hidden that way, which is exactly the behaviour the trap needs to catch. It
+   is pulled off-screen instead, and removed from the tab order and the
+   accessibility tree so no real visitor can reach or hear it. */
+.honeypot-field {
+    height: 0;
+    left: -9999px;
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+}
+
+.form-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    grid-column: 1 / -1;
+    margin-top: 4px;
+}
+.contact-form .button[type='submit'] {
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+.contact-form .button[disabled] {
+    cursor: progress;
+    opacity: 0.6;
+    transform: none;
+}
+.form-note {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ------------------------------------------------------------ success --- */
+
+/* Shown above the form, which stays in place, so the visitor can send a second
+   enquiry and so the dialog never disappears out from under them. */
+.form-banner {
+    background: #f2f9f8;
+    border: 1px solid #cfe6e4;
+    border-top: 4px solid var(--teal);
+    margin-bottom: 28px;
+    padding: 26px 28px;
+}
+.form-banner:focus {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+}
+.form-banner h3 {
+    color: var(--navy);
+    font-size: 21px;
+    letter-spacing: -0.025em;
+    margin: 12px 0 10px;
+}
+.form-banner p {
+    color: #46687f;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+}
+.form-banner .mini {
+    color: var(--teal);
+}
+
+/* ------------------------------------------------------ contact page --- */
+
+.contact-page {
+    display: grid;
+    gap: clamp(40px, 6vw, 90px);
+    grid-template-columns: 0.85fr 1.15fr;
+    padding: 96px clamp(24px, 7.3vw, 112px);
+}
+.contact-aside h2 {
+    margin-bottom: 26px;
+}
+.contact-aside > p {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.75;
+    margin: 0 0 34px;
+}
+.contact-detail {
+    border-top: 1px solid var(--line);
+    padding: 18px 0;
+}
+.contact-detail span {
+    color: #7c8da6;
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    margin-bottom: 7px;
+    text-transform: uppercase;
+}
+.contact-detail strong,
+.contact-detail a {
+    color: var(--navy);
+    font-size: 15px;
+}
+.contact-detail a:hover {
+    color: var(--cobalt);
+}
+.contact-panel {
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: 0 24px 60px rgba(19, 48, 101, 0.1);
+    padding: clamp(28px, 4vw, 48px);
+}
+
+/* -------------------------------------------------------- responsive --- */
+
+@media (max-width: 900px) {
+    .header {
+        grid-template-columns: 1fr auto;
+    }
+    .nav-toggle {
+        display: inline-flex;
+    }
+    .contact-page {
+        gap: 44px;
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .contact-form {
+        grid-template-columns: 1fr;
+    }
+    .contact-page {
+        padding-bottom: 72px;
+        padding-top: 72px;
+    }
+    .modal-panel {
+        max-height: 100vh;
+        max-width: none;
+        padding: 28px 24px;
+        width: 100vw;
+    }
+    .modal-title {
+        font-size: 25px;
+    }
+    .form-banner {
+        padding: 22px 20px;
+    }
+    .form-actions .button {
+        width: 100%;
+    }
+}
+
+/* Users who prefer reduced motion get no lift on buttons. */
+@media (prefers-reduced-motion: reduce) {
+    .button:hover {
+        transform: none;
+    }
+}
+
+/* Labels that exist only for assistive technology (Radix requires a dialog
+   title and description; the menu presents its own visually). */
+.sr-only-title {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+/* The header CTA and the menu CTA are <button> elements, not links. */
+.header > .button,
+.menu-body .button {
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+}

@@ -27,6 +27,6 @@ class InertiaSpamResponder implements SpamResponder
             'user_agent' => $request->userAgent(),
         ]);
 
-        return to_route('contact')->with('status', ContactSubmissionController::CONFIRMATION_MESSAGE);
+        return back()->with('status', ContactSubmissionController::CONFIRMATION_MESSAGE);
     }
 }

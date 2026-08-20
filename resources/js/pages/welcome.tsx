@@ -1,7 +1,5 @@
-import { Head } from '@inertiajs/react';
-import '../../css/stravanta.css';
-
-const logo = '/images/stravanta-logo.png';
+import { Head, Link } from '@inertiajs/react';
+import SiteLayout, { useContactModal } from '@/components/site-layout';
 
 const services = [
     {
@@ -70,18 +68,30 @@ const signals = [
 
 const contactEmail = 'hello@stravantaadvisory.com';
 
-function Brand() {
+/**
+ * Opens the contact dialog.
+ *
+ * Declared as its own component because the dialog's context provider lives in
+ * `SiteLayout`; a hook call in `Welcome` itself sits above the provider and
+ * would silently read the default no-op value.
+ */
+function RequestConsultationButton() {
+    const { openContactModal } = useContactModal();
+
     return (
-        <a className="brand" href="#top" aria-label="STRAVANTA Advisory home">
-            <img src={logo} alt="STRAVANTA" />
-            <span>Advisory</span>
-        </a>
+        <button
+            className="button button-gold"
+            type="button"
+            onClick={openContactModal}
+        >
+            Request a consultation ↗
+        </button>
     );
 }
 
 export default function Welcome() {
     return (
-        <>
+        <SiteLayout isHome>
             <Head>
                 <title>STRAVANTA Advisory | Turn Ambition Into Advantage</title>
                 <meta
@@ -89,19 +99,6 @@ export default function Welcome() {
                     content="Operator-led strategy, operations, AI and transformation advisory for ambitious companies in Sri Lanka and Europe."
                 />
             </Head>
-
-            <header className="header">
-                <Brand />
-                <nav aria-label="Primary navigation">
-                    <a href="#services">Services</a>
-                    <a href="#about">About</a>
-                    <a href="#approach">Approach</a>
-                    <a href="#contact">Contact</a>
-                </nav>
-                <a className="button button-small" href="#contact">
-                    Start a conversation <span>↗</span>
-                </a>
-            </header>
 
             <main>
                 <section className="hero" id="top">
@@ -127,9 +124,9 @@ export default function Welcome() {
                             >
                                 Explore our services ↓
                             </a>
-                            <a className="text-link" href="#contact">
+                            <Link className="text-link" href="/contact">
                                 Discuss your challenge ↗
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <aside className="proof">
@@ -314,24 +311,13 @@ export default function Welcome() {
                             priorities, constraints and the business outcome
                             that matters most.
                         </p>
-                        <a
-                            className="button button-gold"
-                            href={`mailto:${contactEmail}?subject=STRAVANTA%20Advisory%20enquiry`}
-                        >
-                            Request a consultation ↗
-                        </a>
+                        <RequestConsultationButton />
                         <a className="email" href={`mailto:${contactEmail}`}>
                             {contactEmail}
                         </a>
                     </div>
                 </section>
             </main>
-
-            <footer>
-                <Brand />
-                <p>Build smarter. Operate better. Grow faster.</p>
-                <p>© 2026 STRAVANTA Advisory</p>
-            </footer>
-        </>
+        </SiteLayout>
     );
 }
