@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('_admin')
             ->login()
             ->brandName('STRAVANTA Advisory')
+            ->favicon(asset('favicon.ico'))
             ->colors([
                 'primary' => Color::Blue,
             ])

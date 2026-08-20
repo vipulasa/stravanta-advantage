@@ -12,7 +12,8 @@
         "laravel/chisel": "^0.1.0",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
-        "laravel/wayfinder": "^0.1.14"
+        "laravel/wayfinder": "^0.1.14",
+        "spatie/laravel-honeypot": "^4.7.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
@@ -40,6 +41,9 @@
         }
     },
     "scripts": {
+        "refresh" : [
+            "@php artisan migrate:fresh --seed"
+        ],
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",

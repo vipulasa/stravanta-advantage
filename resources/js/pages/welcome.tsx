@@ -34,10 +34,30 @@ const services = [
 ];
 
 const steps = [
-    { number: '01', title: 'Diagnose', description: 'Understand the real constraint—not just the visible symptom.' },
-    { number: '02', title: 'Prioritise', description: 'Focus investment on the few changes with the strongest return.' },
-    { number: '03', title: 'Implement', description: 'Build practical workflows, operating rhythms and controls.' },
-    { number: '04', title: 'Embed', description: 'Transfer capability so improvements continue without dependency.' },
+    {
+        number: '01',
+        title: 'Diagnose',
+        description:
+            'Understand the real constraint—not just the visible symptom.',
+    },
+    {
+        number: '02',
+        title: 'Prioritise',
+        description:
+            'Focus investment on the few changes with the strongest return.',
+    },
+    {
+        number: '03',
+        title: 'Implement',
+        description:
+            'Build practical workflows, operating rhythms and controls.',
+    },
+    {
+        number: '04',
+        title: 'Embed',
+        description:
+            'Transfer capability so improvements continue without dependency.',
+    },
 ];
 
 const signals = [
@@ -87,18 +107,24 @@ export default function Welcome() {
                 <section className="hero" id="top">
                     <div className="orbit" aria-hidden="true" />
                     <div className="hero-content">
-                        <p className="eyebrow">Operator-led business transformation</p>
+                        <p className="eyebrow">
+                            Operator-led business transformation
+                        </p>
                         <h1>
                             Turn ambition
                             <br />
                             into <em>advantage.</em>
                         </h1>
                         <p className="hero-copy">
-                            STRAVANTA helps ambitious companies convert strategy into measurable growth through better
-                            operations, practical AI and disciplined execution.
+                            STRAVANTA helps ambitious companies convert strategy
+                            into measurable growth through better operations,
+                            practical AI and disciplined execution.
                         </p>
                         <div className="actions">
-                            <a className="button button-primary" href="#services">
+                            <a
+                                className="button button-primary"
+                                href="#services"
+                            >
                                 Explore our services ↓
                             </a>
                             <a className="text-link" href="#contact">
@@ -135,7 +161,9 @@ export default function Welcome() {
                 <section className="section" id="services">
                     <div className="heading">
                         <div>
-                            <p className="eyebrow dark">How we create advantage</p>
+                            <p className="eyebrow dark">
+                                How we create advantage
+                            </p>
                             <h2>
                                 Focused engagements.
                                 <br />
@@ -143,7 +171,8 @@ export default function Welcome() {
                             </h2>
                         </div>
                         <p>
-                            Start with clarity, build the right operating system, then sustain momentum with experienced
+                            Start with clarity, build the right operating
+                            system, then sustain momentum with experienced
                             leadership.
                         </p>
                     </div>
@@ -151,8 +180,12 @@ export default function Welcome() {
                         {services.map((service) => (
                             <article className="card" key={service.number}>
                                 <div className="card-top">
-                                    <span className="number">{service.number}</span>
-                                    <span className="duration">{service.duration}</span>
+                                    <span className="number">
+                                        {service.number}
+                                    </span>
+                                    <span className="duration">
+                                        {service.duration}
+                                    </span>
                                 </div>
                                 <h3>{service.title}</h3>
                                 <p>{service.description}</p>
@@ -172,21 +205,29 @@ export default function Welcome() {
                 <section className="about" id="about">
                     <div className="about-left">
                         <p className="eyebrow">Why STRAVANTA</p>
-                        <h2>Advice is only valuable when it changes how work gets done.</h2>
+                        <h2>
+                            Advice is only valuable when it changes how work
+                            gets done.
+                        </h2>
                         <p className="signature">
                             Partner-led advisory
-                            <span>Strategy • Operations • AI • Transformation</span>
+                            <span>
+                                Strategy • Operations • AI • Transformation
+                            </span>
                         </p>
                     </div>
                     <div className="about-right">
                         <p className="lead">
-                            STRAVANTA brings strategy, operations, technology and delivery into one accountable
-                            transformation partnership.
+                            STRAVANTA brings strategy, operations, technology
+                            and delivery into one accountable transformation
+                            partnership.
                         </p>
                         <p>
-                            We work alongside leadership teams to diagnose what is slowing the business down, establish
-                            the right operating discipline and use AI where it creates genuine commercial value—not
-                            where it merely creates noise.
+                            We work alongside leadership teams to diagnose what
+                            is slowing the business down, establish the right
+                            operating discipline and use AI where it creates
+                            genuine commercial value—not where it merely creates
+                            noise.
                         </p>
                         <div className="pillars">
                             <span>Operator-led</span>
@@ -208,7 +249,8 @@ export default function Welcome() {
                             </h2>
                         </div>
                         <p>
-                            A disciplined path from diagnosis to lasting capability—designed to create progress without
+                            A disciplined path from diagnosis to lasting
+                            capability—designed to create progress without
                             disrupting the business unnecessarily.
                         </p>
                     </div>
@@ -225,15 +267,17 @@ export default function Welcome() {
 
                 <section className="fit">
                     <div className="fit-copy">
-                        <p className="eyebrow dark">Where we create the most value</p>
+                        <p className="eyebrow dark">
+                            Where we create the most value
+                        </p>
                         <h2>
                             Built for ambitious
                             <br />
                             growth companies.
                         </h2>
                         <p>
-                            The strongest fit is a 40–250 person business where growth has outpaced the systems used to
-                            manage work.
+                            The strongest fit is a 40–250 person business where
+                            growth has outpaced the systems used to manage work.
                         </p>
                         <div className="sectors">
                             <span>Technology &amp; IT-enabled services</span>
@@ -266,8 +310,9 @@ export default function Welcome() {
                     </div>
                     <div className="cta-copy">
                         <p>
-                            Begin with a focused conversation about your priorities, constraints and the business
-                            outcome that matters most.
+                            Begin with a focused conversation about your
+                            priorities, constraints and the business outcome
+                            that matters most.
                         </p>
                         <a
                             className="button button-gold"

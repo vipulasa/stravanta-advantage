@@ -1,23 +1,37 @@
 <?php
 
 use App\Models\User;
+use Filament\Facades\Filament;
 
-test('guests are redirected from the admin panel to the Filament login page', function () {
-    $this->get('/admin')->assertRedirect('/admin/login');
+/**
+ * Resolve the admin panel's URL prefix from its configuration, so these tests
+ * keep passing if the panel path is changed.
+ */
+function adminPath(string $suffix = ''): string
+{
+    return '/'.trim(Filament::getPanel('admin')->getPath().'/'.ltrim($suffix, '/'), '/');
+}
+
+test('guests are redirected from the admin panel to the login page', function () {
+    $this->get(adminPath())->assertRedirect(adminPath('login'));
 });
 
-test('the Filament login page is reachable', function () {
-    $this->get('/admin/login')->assertOk();
+test('the admin login page is reachable', function () {
+    $this->get(adminPath('login'))->assertOk();
 });
 
 test('an authenticated user can reach the admin dashboard', function () {
     $this->actingAs(User::factory()->create())
-        ->get('/admin')
+        ->get(adminPath())
+        ->assertOk();
+});
+
+test('an authenticated user can reach the users resource', function () {
+    $this->actingAs(User::factory()->create())
+        ->get(adminPath('users'))
         ->assertOk();
 });
 
 test('users may access the admin panel', function () {
-    $panel = Filament\Facades\Filament::getPanel('admin');
-
-    expect(User::factory()->create()->canAccessPanel($panel))->toBeTrue();
+    expect(User::factory()->create()->canAccessPanel(Filament::getPanel('admin')))->toBeTrue();
 });

@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->create([
             'name' => 'STRAVANTA Admin',
-            'email' => 'admin@stravantaadvisory.com',
+            'email' => 'v.s.anandapiya@gmail.com',
+            'password' => bcrypt('$$v.s.anandapiya@gmail.com##123'),
         ]);
     }
 }
