@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import PostCard, { formatPublishedAt } from '@/components/blog/post-card';
+import PostCard from '@/components/blog/post-card';
 import SiteLayout from '@/components/site-layout';
 import { index } from '@/routes/blog';
 import type { BlogPost, PostCard as PostCardData } from '@/types/blog';
@@ -11,8 +11,6 @@ type BlogShowProps = {
 };
 
 export default function BlogShow({ post, related }: BlogShowProps) {
-    const publishedAt = formatPublishedAt(post.published_at);
-
     return (
         <SiteLayout>
             <Head>
@@ -36,9 +34,9 @@ export default function BlogShow({ post, related }: BlogShowProps) {
 
                         <p className="post-byline">
                             {post.author && <span>{post.author}</span>}
-                            {publishedAt && (
+                            {post.published_at_label && (
                                 <time dateTime={post.published_at ?? undefined}>
-                                    {publishedAt}
+                                    {post.published_at_label}
                                 </time>
                             )}
                         </p>

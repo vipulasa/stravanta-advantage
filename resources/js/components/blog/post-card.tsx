@@ -2,27 +2,7 @@ import { Link } from '@inertiajs/react';
 import { show } from '@/routes/blog';
 import type { PostCard as PostCardData } from '@/types/blog';
 
-/**
- * Format a publish date for display, tolerating a missing one.
- *
- * Published posts always carry a date, but the type allows null because the
- * same card shape is reused wherever a post is summarised.
- */
-export function formatPublishedAt(value: string | null): string | null {
-    if (value === null) {
-        return null;
-    }
-
-    return new Date(value).toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-    });
-}
-
 export default function PostCard({ post }: { post: PostCardData }) {
-    const publishedAt = formatPublishedAt(post.published_at);
-
     return (
         <article className="post-card">
             {post.image ? (
@@ -41,9 +21,9 @@ export default function PostCard({ post }: { post: PostCardData }) {
                     {post.category && (
                         <span className="category">{post.category.name}</span>
                     )}
-                    {publishedAt && (
+                    {post.published_at_label && (
                         <time dateTime={post.published_at ?? undefined}>
-                            {publishedAt}
+                            {post.published_at_label}
                         </time>
                     )}
                 </p>

@@ -16,8 +16,22 @@ return [
     */
 
     'ssr' => [
-        'enabled' => true,
-        'url' => 'http://127.0.0.1:13714',
+
+        /*
+         * Read from the environment so SSR can be switched off per environment
+         * without a code change. `phpunit.xml` sets it to false: the test suite
+         * has no SSR server, and `Vite::isRunningHot()` is true whenever a dev
+         * server is running, which would otherwise send every Inertia assertion
+         * through a real HTTP render.
+         */
+        'enabled' => (bool) env('INERTIA_SSR_ENABLED', true),
+
+        'url' => env('INERTIA_SSR_URL', 'http://127.0.0.1:13714'),
+
+        /*
+         * Left to the bundle detector, which finds `bootstrap/ssr/app.js` —
+         * the file `vite build --ssr` produces for this app.
+         */
         // 'bundle' => base_path('bootstrap/ssr/ssr.mjs'),
 
     ],

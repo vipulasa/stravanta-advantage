@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia;
 use Livewire\Livewire;
@@ -323,4 +324,15 @@ test('a post with more than one page of articles paginates', function () {
     $this->get(route('blog.index', ['page' => 2]))
         ->assertOk()
         ->assertInertia(fn (AssertableInertia $page) => $page->has('posts.data', 3)->etc());
+});
+
+test('the publish date is formatted on the server for hydration safety', function () {
+    publishedPost(['published_at' => Carbon::parse('2026-08-17 09:30:00')]);
+
+    $this->get(route('blog.index'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('posts.data.0.published_at_label', '17 August 2026')
+            ->where('posts.data.0.published_at', fn (string $iso): bool => str_starts_with($iso, '2026-08-17'))
+            ->etc());
 });

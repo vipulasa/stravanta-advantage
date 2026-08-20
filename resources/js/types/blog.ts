@@ -11,6 +11,13 @@ export type PostCard = {
     excerpt: string | null;
     /** ISO 8601, or null while the post is unpublished. */
     published_at: string | null;
+    /**
+     * The display date, formatted on the server.
+     *
+     * Formatting in the browser would render one date under SSR (server
+     * timezone) and another on hydration (visitor timezone).
+     */
+    published_at_label: string | null;
     category: BlogCategory | null;
     author: string | null;
     /** Featured image URL, or null when the post has none. */

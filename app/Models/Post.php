@@ -188,11 +188,17 @@ class Post extends Model implements HasMedia, HasRichContent
      * Kept on the model so the listing and the article page cannot drift apart
      * on what a "card" contains.
      *
+     * The publish date is formatted here rather than in the browser. Under SSR
+     * the server renders in the server's timezone and the client would rehydrate
+     * in the visitor's, so a client-side `toLocaleDateString()` produces a
+     * hydration mismatch whenever the two disagree about the date.
+     *
      * @return array{
      *     title: string,
      *     slug: string,
      *     excerpt: string|null,
      *     published_at: string|null,
+     *     published_at_label: string|null,
      *     category: array{name: string, slug: string}|null,
      *     author: string|null,
      *     image: string|null,
@@ -205,6 +211,7 @@ class Post extends Model implements HasMedia, HasRichContent
             'slug' => $this->slug,
             'excerpt' => $this->excerpt,
             'published_at' => $this->published_at?->toIso8601String(),
+            'published_at_label' => $this->published_at?->format('j F Y'),
             'category' => $this->category === null ? null : [
                 'name' => $this->category->name,
                 'slug' => $this->category->slug,
