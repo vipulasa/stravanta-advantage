@@ -1,7 +1,26 @@
 import { useForm, usePage } from '@inertiajs/react';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import type { ContactFormData } from '@/types/contact';
+
+/**
+ * Build the wrapper classes for a field.
+ *
+ * Returns complete class names rather than interpolating a conditional
+ * fragment: `prettier-plugin-tailwindcss` treats a className template literal
+ * as a class list and normalises its whitespace, which silently ate the
+ * leading space in `' field-invalid'` and rendered `fieldfield-invalid` —
+ * dropping the field layout entirely whenever validation failed.
+ */
+function fieldClasses(hasError: unknown, wide = false): string {
+    return [
+        'field',
+        wide ? 'field-wide' : null,
+        hasError ? 'field-invalid' : null,
+    ]
+        .filter(Boolean)
+        .join(' ');
+}
 
 const emptyForm: ContactFormData = {
     name: '',
@@ -16,6 +35,12 @@ export default function ContactForm() {
     const { honeypot, serviceInterests } = usePage().props;
     const [submitted, setSubmitted] = useState(false);
     const banner = useRef<HTMLDivElement>(null);
+
+    // The page and the modal can render this form at the same time on
+    // /contact, so field ids must be unique per instance — otherwise every
+    // label in the modal points at the page form's input.
+    const id = useId();
+    const fieldId = (field: string): string => `${id}-${field}`;
 
     const { data, setData, post, processing, errors, reset, transform } =
         useForm<ContactFormData>({ ...emptyForm });
@@ -43,7 +68,13 @@ export default function ContactForm() {
                 setSubmitted(true);
                 // Move focus to the confirmation so it is announced and so
                 // keyboard users are not left at the bottom of a blank form.
-                requestAnimationFrame(() => banner.current?.focus());
+                requestAnimationFrame(() => {
+                    banner.current?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest',
+                    });
+                    banner.current?.focus({ preventScroll: true });
+                });
             },
         });
     }
@@ -62,8 +93,7 @@ export default function ContactForm() {
                     <h3>Thank you — we have your message.</h3>
                     <p>
                         We have emailed you a confirmation and will reply within
-                        one business day. Need us sooner? Write to
-                        hello@stravantaadvisory.com.
+                        one business day.
                     </p>
                 </div>
             )}
@@ -71,9 +101,11 @@ export default function ContactForm() {
             <form className="contact-form" onSubmit={submit} noValidate>
                 {/* Honeypot trap: off-screen, untabbable, hidden from assistive tech. */}
                 <div className="honeypot-field" aria-hidden="true">
-                    <label htmlFor="stravanta-hp">Leave this field empty</label>
+                    <label htmlFor={fieldId('hp')}>
+                        Leave this field empty
+                    </label>
                     <input
-                        id="stravanta-hp"
+                        id={fieldId('hp')}
                         type="text"
                         name={honeypot.nameFieldName}
                         tabIndex={-1}
@@ -82,10 +114,10 @@ export default function ContactForm() {
                     />
                 </div>
 
-                <div className={`field${errors.name ? 'field-invalid' : ''}`}>
-                    <label htmlFor="contact-name">Your name</label>
+                <div className={fieldClasses(errors.name)}>
+                    <label htmlFor={fieldId('name')}>Your name</label>
                     <input
-                        id="contact-name"
+                        id={fieldId('name')}
                         type="text"
                         name="name"
                         autoComplete="name"
@@ -93,20 +125,20 @@ export default function ContactForm() {
                         onChange={(e) => setData('name', e.target.value)}
                         aria-invalid={Boolean(errors.name)}
                         aria-describedby={
-                            errors.name ? 'contact-name-error' : undefined
+                            errors.name ? fieldId('name-error') : undefined
                         }
                     />
                     {errors.name && (
-                        <p className="field-error" id="contact-name-error">
+                        <p className="field-error" id={fieldId('name-error')}>
                             {errors.name}
                         </p>
                     )}
                 </div>
 
-                <div className={`field${errors.email ? 'field-invalid' : ''}`}>
-                    <label htmlFor="contact-email">Work email</label>
+                <div className={fieldClasses(errors.email)}>
+                    <label htmlFor={fieldId('email')}>Work email</label>
                     <input
-                        id="contact-email"
+                        id={fieldId('email')}
                         type="email"
                         name="email"
                         autoComplete="email"
@@ -114,24 +146,22 @@ export default function ContactForm() {
                         onChange={(e) => setData('email', e.target.value)}
                         aria-invalid={Boolean(errors.email)}
                         aria-describedby={
-                            errors.email ? 'contact-email-error' : undefined
+                            errors.email ? fieldId('email-error') : undefined
                         }
                     />
                     {errors.email && (
-                        <p className="field-error" id="contact-email-error">
+                        <p className="field-error" id={fieldId('email-error')}>
                             {errors.email}
                         </p>
                     )}
                 </div>
 
-                <div
-                    className={`field${errors.company ? 'field-invalid' : ''}`}
-                >
-                    <label htmlFor="contact-company">
+                <div className={fieldClasses(errors.company)}>
+                    <label htmlFor={fieldId('company')}>
                         Company <span className="optional">(optional)</span>
                     </label>
                     <input
-                        id="contact-company"
+                        id={fieldId('company')}
                         type="text"
                         name="company"
                         autoComplete="organization"
@@ -143,12 +173,12 @@ export default function ContactForm() {
                     )}
                 </div>
 
-                <div className={`field${errors.phone ? 'field-invalid' : ''}`}>
-                    <label htmlFor="contact-phone">
+                <div className={fieldClasses(errors.phone)}>
+                    <label htmlFor={fieldId('phone')}>
                         Phone <span className="optional">(optional)</span>
                     </label>
                     <input
-                        id="contact-phone"
+                        id={fieldId('phone')}
                         type="tel"
                         name="phone"
                         autoComplete="tel"
@@ -160,14 +190,12 @@ export default function ContactForm() {
                     )}
                 </div>
 
-                <div
-                    className={`field field-wide${errors.service_interest ? 'field-invalid' : ''}`}
-                >
-                    <label htmlFor="contact-service">
+                <div className={fieldClasses(errors.service_interest, true)}>
+                    <label htmlFor={fieldId('service')}>
                         Which engagement interests you?
                     </label>
                     <select
-                        id="contact-service"
+                        id={fieldId('service')}
                         name="service_interest"
                         value={data.service_interest}
                         onChange={(e) =>
@@ -176,7 +204,7 @@ export default function ContactForm() {
                         aria-invalid={Boolean(errors.service_interest)}
                         aria-describedby={
                             errors.service_interest
-                                ? 'contact-service-error'
+                                ? fieldId('service-error')
                                 : undefined
                         }
                     >
@@ -188,30 +216,36 @@ export default function ContactForm() {
                         ))}
                     </select>
                     {errors.service_interest && (
-                        <p className="field-error" id="contact-service-error">
+                        <p
+                            className="field-error"
+                            id={fieldId('service-error')}
+                        >
                             {errors.service_interest}
                         </p>
                     )}
                 </div>
 
-                <div
-                    className={`field field-wide${errors.message ? 'field-invalid' : ''}`}
-                >
-                    <label htmlFor="contact-message">
+                <div className={fieldClasses(errors.message, true)}>
+                    <label htmlFor={fieldId('message')}>
                         What would you like to solve?
                     </label>
                     <textarea
-                        id="contact-message"
+                        id={fieldId('message')}
                         name="message"
                         value={data.message}
                         onChange={(e) => setData('message', e.target.value)}
                         aria-invalid={Boolean(errors.message)}
                         aria-describedby={
-                            errors.message ? 'contact-message-error' : undefined
+                            errors.message
+                                ? fieldId('message-error')
+                                : undefined
                         }
                     />
                     {errors.message && (
-                        <p className="field-error" id="contact-message-error">
+                        <p
+                            className="field-error"
+                            id={fieldId('message-error')}
+                        >
                             {errors.message}
                         </p>
                     )}

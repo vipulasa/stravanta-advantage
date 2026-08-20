@@ -328,13 +328,16 @@
 /* ------------------------------------------------------------ success --- */
 
 /* Shown above the form, which stays in place, so the visitor can send a second
-   enquiry and so the dialog never disappears out from under them. */
+   enquiry and so the dialog never disappears out from under them.
+   Palette and the 3px accent rule follow `.card` in the template: paper ground,
+   1px --line border, coloured top bar. Teal is the template's positive accent,
+   used for `.outcome strong` and the `.signals` checkmarks. */
 .form-banner {
-    background: #f2f9f8;
-    border: 1px solid #cfe6e4;
-    border-top: 4px solid var(--teal);
-    margin-bottom: 28px;
-    padding: 26px 28px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--teal);
+    margin-bottom: 22px;
+    padding: 17px 20px;
 }
 .form-banner:focus {
     outline: 2px solid var(--teal);
@@ -342,14 +345,14 @@
 }
 .form-banner h3 {
     color: var(--navy);
-    font-size: 21px;
-    letter-spacing: -0.025em;
-    margin: 12px 0 10px;
+    font-size: 17px;
+    letter-spacing: -0.02em;
+    margin: 7px 0 6px;
 }
 .form-banner p {
-    color: #46687f;
-    font-size: 14px;
-    line-height: 1.7;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.65;
     margin: 0;
 }
 .form-banner .mini {
@@ -434,7 +437,7 @@
         font-size: 25px;
     }
     .form-banner {
-        padding: 22px 20px;
+        padding: 15px 16px;
     }
     .form-actions .button {
         width: 100%;
