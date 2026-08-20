@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/vipulasa/Library/Application Support/Herd/bin/php85",
+            "args": [
+                "/Users/vipulasa/Webroot/stravanta-advantage/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}
