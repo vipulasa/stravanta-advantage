@@ -36,6 +36,11 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
+            // Blog is declared explicitly so it sits above the ungrouped
+            // resources rather than being ordered alphabetically among them.
+            ->navigationGroups([
+                'Blog',
+            ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,

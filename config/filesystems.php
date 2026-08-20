@@ -60,6 +60,34 @@ return [
             'report' => false,
         ],
 
+        /*
+         * Cloudflare R2 speaks the S3 API, with three differences that matter:
+         *
+         * - It has no ACLs, so no 'visibility' key may be set here; asking for
+         *   one makes every upload fail.
+         * - The 'endpoint' above is the S3 API host and cannot serve images to
+         *   a browser, so 'url' points at the bucket's custom CDN domain.
+         * - It rejects the AWS SDK's default CRC32 integrity headers. The two
+         *   checksum keys are S3Client options, so they belong at the top level
+         *   of this array: Laravel hands the whole disk config to the client but
+         *   passes 'options' to Flysystem as write options, where they would be
+         *   silently ignored.
+         */
+        'r2' => [
+            'driver' => 's3',
+            'key' => env('R2_ACCESS_KEY_ID'),
+            'secret' => env('R2_SECRET_ACCESS_KEY'),
+            'region' => env('R2_DEFAULT_REGION', 'auto'),
+            'bucket' => env('R2_BUCKET'),
+            'url' => env('R2_URL'),
+            'endpoint' => env('R2_ENDPOINT'),
+            'use_path_style_endpoint' => true,
+            'request_checksum_calculation' => 'when_required',
+            'response_checksum_calculation' => 'when_required',
+            'throw' => true,
+            'report' => false,
+        ],
+
     ],
 
     /*

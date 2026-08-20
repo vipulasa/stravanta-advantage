@@ -69,6 +69,7 @@ export default function SiteLayout({
         { label: 'Services', href: `${prefix}#services`, page: !isHome },
         { label: 'About', href: `${prefix}#about`, page: !isHome },
         { label: 'Approach', href: `${prefix}#approach`, page: !isHome },
+        { label: 'Blog', href: '/blog', page: true },
         { label: 'Contact', href: '/contact', page: true },
     ];
 

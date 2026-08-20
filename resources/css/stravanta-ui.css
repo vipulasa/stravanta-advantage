@@ -21,6 +21,26 @@
     z-index: 50;
 }
 
+/* ---------------------------------------------------------------- brand --- */
+
+/* The template draws the wordmark at 155x33. It reads small against an 88px
+   header, so it is scaled up here rather than in `stravanta.css`, which stays
+   identical to the approved artwork. The 4.7:1 aspect ratio is preserved. */
+.brand img {
+    height: 44px;
+    width: 207px;
+}
+
+/* The wordmark artwork is navy, which vanishes against the navy footer — the
+   same problem the mobile menu has, solved the same way. */
+footer .brand img {
+    filter: brightness(0) invert(1);
+}
+footer .brand span {
+    border-left-color: rgba(255, 255, 255, 0.24);
+    color: #8699ba;
+}
+
 /* The template hides the nav and CTA below 900px with nothing in their place.
    These rules give that space a hamburger and a full-screen menu instead. */
 
@@ -420,6 +440,13 @@
 }
 
 @media (max-width: 600px) {
+    /* `stravanta.css` scales the wordmark down in its own 600px query. The flat
+       rule above sits in a later file at equal specificity, so it would win
+       everywhere unless the small-screen size is restated here too. */
+    .brand img {
+        height: 36px;
+        width: 169px;
+    }
     .contact-form {
         grid-template-columns: 1fr;
     }
