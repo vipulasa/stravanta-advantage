@@ -1,4 +1,5 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
+import SeoHead from '@/components/seo-head';
 import SiteLayout, { useContactModal } from '@/components/site-layout';
 
 const services = [
@@ -92,13 +93,7 @@ function RequestConsultationButton() {
 export default function Welcome() {
     return (
         <SiteLayout isHome>
-            <Head>
-                <title>STRAVANTA Advisory | Turn Ambition Into Advantage</title>
-                <meta
-                    name="description"
-                    content="Operator-led strategy, operations, AI and transformation advisory for ambitious companies in Sri Lanka and Europe."
-                />
-            </Head>
+            <SeoHead />
 
             <main>
                 <section className="hero" id="top">

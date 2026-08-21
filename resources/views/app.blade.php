@@ -17,8 +17,12 @@
              would alter the approved design. --}}
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
+        {{-- The slot is Inertia's non-SSR branch: it renders only when there
+             is no SSR response to splice in. `x-seo` mirrors what
+             `seo-head.tsx` produces, so an SSR outage still leaves crawlers
+             and social scrapers a complete head. --}}
         <x-inertia::head>
-            <title>{{ config('app.name', 'Laravel') }}</title>
+            <x-seo :seo="$page['props']['seo']" />
         </x-inertia::head>
     </head>
     <body>

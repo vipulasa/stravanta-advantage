@@ -1,5 +1,6 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import PostCard from '@/components/blog/post-card';
+import SeoHead from '@/components/seo-head';
 import SiteLayout from '@/components/site-layout';
 import { index } from '@/routes/blog';
 import type { BlogPost, PostCard as PostCardData } from '@/types/blog';
@@ -13,15 +14,7 @@ type BlogShowProps = {
 export default function BlogShow({ post, related }: BlogShowProps) {
     return (
         <SiteLayout>
-            <Head>
-                <title>{`${post.meta_title ?? post.title} — STRAVANTA Advisory`}</title>
-                {(post.meta_description ?? post.excerpt) && (
-                    <meta
-                        name="description"
-                        content={post.meta_description ?? post.excerpt ?? ''}
-                    />
-                )}
-            </Head>
+            <SeoHead />
 
             <main>
                 <article>

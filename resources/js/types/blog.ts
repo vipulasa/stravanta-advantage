@@ -24,11 +24,15 @@ export type PostCard = {
     image: string | null;
 };
 
-/** A full article. `body` is rendered HTML from the admin's rich editor. */
+/**
+ * A full article. `body` is rendered HTML from the admin's rich editor.
+ *
+ * The admin's `meta_title` and `meta_description` are not here: they are
+ * consumed server-side when building the page's `seo` prop, so sending them to
+ * the browser as well would only duplicate the payload.
+ */
 export type BlogPost = PostCard & {
     body: string;
-    meta_title: string | null;
-    meta_description: string | null;
 };
 
 /** One entry in Laravel's paginator link list. */

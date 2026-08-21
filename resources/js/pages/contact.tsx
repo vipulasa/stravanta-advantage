@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
 import ContactForm from '@/components/contact-form';
+import SeoHead from '@/components/seo-head';
 import SiteLayout from '@/components/site-layout';
 
 const contactEmail = 'hello@stravantaadvisory.com';
@@ -7,13 +7,7 @@ const contactEmail = 'hello@stravantaadvisory.com';
 export default function Contact() {
     return (
         <SiteLayout>
-            <Head>
-                <title>Contact STRAVANTA Advisory</title>
-                <meta
-                    name="description"
-                    content="Start a conversation about your priorities, constraints and the business outcome that matters most. Operator-led advisory across Sri Lanka and Europe."
-                />
-            </Head>
+            <SeoHead />
 
             <main>
                 <section className="contact-page">

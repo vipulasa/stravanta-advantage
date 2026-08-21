@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Enums\ServiceInterest;
+use App\Support\Seo\SeoData;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Spatie\Honeypot\Honeypot;
@@ -49,6 +50,11 @@ class HandleInertiaRequests extends Middleware
             // Inertia, so the admin panel is unaffected.
             'honeypot' => fn (): array => app(Honeypot::class)->toArray(),
             'serviceInterests' => fn (): array => ServiceInterest::options(),
+            // A complete, canonical-correct default. Page props override
+            // shared props wholesale, so any page that builds its own SeoData
+            // replaces this; a page that forgets to still renders a valid head
+            // rather than an empty one.
+            'seo' => fn (): array => SeoData::default($request)->toArray(),
         ];
     }
 }

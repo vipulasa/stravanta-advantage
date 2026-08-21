@@ -1,5 +1,6 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import PostCard from '@/components/blog/post-card';
+import SeoHead from '@/components/seo-head';
 import SiteLayout from '@/components/site-layout';
 import { index } from '@/routes/blog';
 import type {
@@ -33,13 +34,7 @@ export default function BlogIndex({
 }: BlogIndexProps) {
     return (
         <SiteLayout>
-            <Head>
-                <title>Insights — STRAVANTA Advisory</title>
-                <meta
-                    name="description"
-                    content="Operator-led thinking on operational excellence, practical AI, governance and predictable delivery."
-                />
-            </Head>
+            <SeoHead />
 
             <main>
                 <section className="blog-masthead">
